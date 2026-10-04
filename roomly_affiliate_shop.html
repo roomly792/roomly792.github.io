@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roomly – Zimmerdeko entdecken</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#070b14;color:#eef3ff}
+header{position:sticky;top:0;z-index:5;background:#080d18ee;backdrop-filter:blur(12px);border-bottom:1px solid #172238}
+nav{max-width:1150px;margin:auto;padding:18px 22px;display:flex;align-items:center;gap:24px}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1px;margin-right:auto}.logo span{color:#5d91ed}
+nav a{color:#c9d5ea;text-decoration:none;font-size:14px}.hero{max-width:1150px;margin:35px auto 25px;padding:0 22px}
+.hero-box{padding:48px 38px;border-radius:28px;background:linear-gradient(135deg,#0b1427,#101d35);border:1px solid #1c2d4b;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:.98;margin:0 0 18px;letter-spacing:-3px}.hero p{max-width:520px;color:#aebbd0;font-size:17px;line-height:1.6}.btn{display:inline-block;background:#315da8;color:white;border:0;border-radius:12px;padding:13px 18px;text-decoration:none;font-weight:700;cursor:pointer}
+.container{max-width:1150px;margin:auto;padding:0 22px 50px}.section-title{display:flex;justify-content:space-between;align-items:end;margin:35px 0 16px}.section-title h2{margin:0;font-size:28px}.categories{display:flex;gap:10px;overflow:auto;padding-bottom:5px}.cat{border:1px solid #ddd4c8;background:white;border-radius:999px;padding:10px 16px;cursor:pointer;white-space:nowrap}.cat.active,.cat:hover{background:#315da8;color:white;border-color:#315da8}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:#0d1525;border:1px solid #1c2b44;border-radius:20px;overflow:hidden;cursor:pointer;transition:.2s}.card:hover{transform:translateY(-4px);box-shadow:0 16px 35px #00000055}.pic{height:190px;background:linear-gradient(135deg,#14233e,#0a1020);display:grid;place-items:center;font-size:62px}.info{padding:15px}.tag{font-size:11px;color:#70a2ff;text-transform:uppercase;font-weight:800;letter-spacing:1px}.name{font-weight:750;margin:6px 0}.price{font-weight:800}.modal{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{background:#0c1424;border:1px solid #203250;max-width:760px;width:100%;border-radius:25px;padding:24px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:25px}.close{position:absolute;right:18px;top:14px;border:0;background:none;font-size:27px;cursor:pointer}.detailpic{min-height:320px;border-radius:18px;background:linear-gradient(135deg,#14233e,#0a1020);display:grid;place-items:center;font-size:100px}.dialog h2{font-size:32px;margin:5px 0 12px}.dialog p{color:#aebbd0;line-height:1.6}.affiliate{margin-top:22px}.affiliate small{display:block;color:#777;margin-top:9px}
+footer{border-top:1px solid #172238;padding:25px 22px;text-align:center;color:#74839c}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.hero-box{padding:35px 25px}.dialog{grid-template-columns:1fr}}
+@media(max-width:500px){.grid{grid-template-columns:1fr 1fr;gap:10px}.pic{height:145px}.hero h1{font-size:42px}}
+</style>
+</head>
+<body>
+<header><nav><div class="logo">room<span>ly</span></div><a href="#produkte">Produkte</a><a href="#kategorien">Kategorien</a><a href="#info">Über uns</a></nav></header>
+<section class="hero"><div class="hero-box"><div><h1>Mach dein Zimmer<br>zu deinem Ort.</h1><p>Entdecke ausgewählte Deko, Möbel und Accessoires für ein gemütliches und modernes Zimmer.</p><a class="btn" href="#produkte">Produkte entdecken</a></div><div style="font-size:120px">🪴</div></div></section>
+<main class="container">
+<div class="section-title" id="kategorien"><h2>Kategorien</h2></div>
+<div class="categories" id="cats"></div>
+<div class="section-title" id="produkte"><h2>Beliebte Produkte</h2></div>
+<div class="grid" id="products"></div>
+</main>
+<footer id="info">Roomly · Inspiration für dein Zimmer · Affiliate-Links können Provisionen enthalten.</footer>
+<div class="modal" id="modal"><div class="dialog"><button class="close" onclick="closeModal()">×</button><div class="detailpic" id="dicon"></div><div><div class="tag" id="dcat"></div><h2 id="dname"></h2><p id="ddesc"></p><div class="price" id="dprice"></div><div class="affiliate"><a class="btn" id="dlink" href="#" target="_blank" rel="noopener">Zum Produkt</a><small>Affiliate-Link: Der Kauf erfolgt beim jeweiligen Anbieter.</small></div></div></div></div>
+<script>
+const products=[
+{id:1,cat:"Beleuchtung",name:"LED Ambient Light",price:"29,99 €",icon:"💡",desc:"Moderne Ambient-Beleuchtung für eine gemütliche Atmosphäre.",link:"https://example.com/affiliate/led"},
+{id:2,cat:"Wanddeko",name:"Minimalistisches Poster",price:"14,99 €",icon:"🖼️",desc:"Schlichtes Wandbild für einen modernen Look.",link:"https://example.com/affiliate/poster"},
+{id:3,cat:"Pflanzen",name:"Kleine Kunstpflanze",price:"12,99 €",icon:"🪴",desc:"Pflegeleichte Deko-Pflanze für Schreibtisch oder Regal.",link:"https://example.com/affiliate/pflanze"},
+{id:4,cat:"Möbel",name:"Beistelltisch",price:"39,99 €",icon:"🪑",desc:"Kompakter Tisch, der sich ideal neben Sofa oder Bett macht.",link:"https://example.com/affiliate/tisch"},
+{id:5,cat:"Aufbewahrung",name:"Organizer Box",price:"18,99 €",icon:"📦",desc:"Ordnung für kleine Gegenstände auf Schreibtisch und Regal.",link:"https://example.com/affiliate/box"},
+{id:6,cat:"Textilien",name:"Kuscheldecke",price:"24,99 €",icon:"🛋️",desc:"Weiche Decke für eine gemütliche Ecke.",link:"https://example.com/affiliate/decke"},
+{id:7,cat:"Gaming",name:"Desk LED Strip",price:"21,99 €",icon:"🎮",desc:"LED-Licht für Schreibtisch und Gaming-Setup.",link:"https://example.com/affiliate/ledstrip"},
+{id:8,cat:"Wanddeko",name:"Fotowand-Set",price:"16,99 €",icon:"📸",desc:"Set aus mehreren Prints für eine persönliche Wand.",link:"https://example.com/affiliate/fotos"}
+];
+const cats=["Alle",...new Set(products.map(p=>p.cat))];let current="Alle";
+const catsEl=document.getElementById("cats"), grid=document.getElementById("products");
+cats.forEach(c=>{let b=document.createElement("button");b.className="cat"+(c==="Alle"?" active":"");b.textContent=c;b.onclick=()=>{current=c;document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()};catsEl.appendChild(b)});
+function render(){grid.innerHTML="";products.filter(p=>current==="Alle"||p.cat===current).forEach(p=>{let x=document.createElement("article");x.className="card";x.innerHTML=`<div class="pic">${p.icon}</div><div class="info"><div class="tag">${p.cat}</div><div class="name">${p.name}</div><div class="price">${p.price}</div></div>`;x.onclick=()=>openModal(p);grid.appendChild(x)})}
+function openModal(p){document.getElementById("dicon").textContent=p.icon;document.getElementById("dcat").textContent=p.cat;document.getElementById("dname").textContent=p.name;document.getElementById("ddesc").textContent=p.desc;document.getElementById("dprice").textContent=p.price;document.getElementById("dlink").href=p.link;document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()};render();
+</script>
+</body>
+</html>
